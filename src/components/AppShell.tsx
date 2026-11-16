@@ -63,9 +63,9 @@ function FamilyShell({ userId, children }: { userId: string; children: ReactNode
     <main className="min-h-screen bg-background">
       <header className="sticky top-0 z-10 border-b bg-card/95 backdrop-blur">
         <div className="mx-auto flex max-w-2xl items-center gap-3 px-4 py-2.5">
-          <Link to="/" className="flex min-w-0 items-center gap-2">
+          <Link to="/" aria-label="Home" className="flex min-w-0 shrink-0 items-center gap-2">
             <img src={logo} alt="" width={32} height={32} className="rounded-lg" />
-            <span className="truncate font-semibold">{fam?.name ?? "The Tiny Steps"}</span>
+            <span className="hidden truncate font-semibold sm:inline">{fam?.name ?? "The Tiny Steps"}</span>
           </Link>
           {first && (
             <nav className="ml-auto flex items-center gap-1 text-sm">
@@ -77,6 +77,15 @@ function FamilyShell({ userId, children }: { userId: string; children: ReactNode
               >
                 Kids
               </Link>
+              {first.role === "parent" && (
+                <Link
+                  to="/habits"
+                  className="rounded-full px-3 py-1.5 text-muted-foreground hover:bg-accent"
+                  activeProps={{ className: "bg-accent text-accent-foreground font-medium" }}
+                >
+                  Habits
+                </Link>
+              )}
               <Link
                 to="/family"
                 className="rounded-full px-3 py-1.5 text-muted-foreground hover:bg-accent"
