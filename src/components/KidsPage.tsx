@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { MoreVertical, Pencil, Plus, Star, Trash2 } from "lucide-react";
@@ -121,25 +122,31 @@ function KidCard({ kid, canEdit, onChanged }: { kid: KidTotals; canEdit: boolean
   });
 
   return (
-    <Card className="flex items-center gap-4 p-4 shadow-card">
-      <div
-        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-lg font-bold"
-        style={{ backgroundColor: `oklch(0.92 0.06 ${hue})`, color: `oklch(0.4 0.14 ${hue})` }}
-        aria-hidden
+    <Card className="flex items-center gap-2 p-2 pr-3 shadow-card">
+      <Link
+        to="/kid/$kidId"
+        params={{ kidId: kid.kid_id }}
+        className="flex min-w-0 flex-1 items-center gap-4 rounded-lg p-2 hover:bg-accent/50"
       >
-        {kid.name.trim().charAt(0).toUpperCase()}
-      </div>
-      <div className="min-w-0 flex-1">
-        <div className="truncate text-lg font-semibold">{kid.name}</div>
-        <div className="text-xs text-muted-foreground">
-          <span className="text-earn">+{kid.total_earned} earned</span>
-          {kid.total_deducted > 0 && <span className="text-deduct"> · −{kid.total_deducted} deducted</span>}
+        <div
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-lg font-bold"
+          style={{ backgroundColor: `oklch(0.92 0.06 ${hue})`, color: `oklch(0.4 0.14 ${hue})` }}
+          aria-hidden
+        >
+          {kid.name.trim().charAt(0).toUpperCase()}
         </div>
-      </div>
-      <div className="flex items-center gap-1 text-2xl font-bold tabular-nums">
-        <Star className="h-6 w-6 fill-star text-star" />
-        {kid.balance}
-      </div>
+        <div className="min-w-0 flex-1">
+          <div className="truncate text-lg font-semibold">{kid.name}</div>
+          <div className="text-xs text-muted-foreground">
+            <span className="text-earn">+{kid.total_earned} earned</span>
+            {kid.total_deducted > 0 && <span className="text-deduct"> · −{kid.total_deducted} deducted</span>}
+          </div>
+        </div>
+        <div className="flex items-center gap-1 text-2xl font-bold tabular-nums">
+          <Star className="h-6 w-6 fill-star text-star" />
+          {kid.balance}
+        </div>
+      </Link>
 
       {canEdit && (
         <>
