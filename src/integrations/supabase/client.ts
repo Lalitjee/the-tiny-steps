@@ -1,0 +1,24 @@
+import { createClient } from "@supabase/supabase-js";
+import type { Database } from "./types";
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  const missing = [
+    ...(!SUPABASE_URL ? ["VITE_SUPABASE_URL"] : []),
+    ...(!SUPABASE_ANON_KEY ? ["VITE_SUPABASE_ANON_KEY"] : []),
+  ];
+  // eslint-disable-next-line no-console
+  console.error(
+    `[Supabase] Missing environment variable(s): ${missing.join(", ")}. Copy .env.example to .env and fill in your Supabase project URL and anon key.`,
+  );
+}
+
+export const supabase = createClient<Database>(SUPABASE_URL ?? "", SUPABASE_ANON_KEY ?? "", {
+  auth: {
+    storage: typeof window !== "undefined" ? window.localStorage : undefined,
+    persistSession: true,
+    autoRefreshToken: true,
+  },
+});
