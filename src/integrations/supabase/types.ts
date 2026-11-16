@@ -172,6 +172,10 @@ export type Database = {
     Functions: {
       rw_create_family: { Args: { p_name: string }; Returns: string };
       rw_accept_invites: { Args: Record<string, never>; Returns: number };
+      rw_list_members: {
+        Args: { p_family: string };
+        Returns: { user_id: string; email: string; full_name: string | null; role: Role }[];
+      };
       rw_review_habit: {
         Args: { p_habit_id: string; p_period_start: string; p_status: "done" | "not_done" };
         Returns: string;
